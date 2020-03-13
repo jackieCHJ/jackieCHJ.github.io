@@ -1,10 +1,11 @@
 <html lang="zh-cn">
 <head>
 <meta charset="UTF-8">
-<title>11</title>
+<title>世界疫情分布</title>
+
 <script type="text/javascript" src="https://jackiechj.github.io/js/jquery.min.js"></script>
 	<script type="text/javascript" src="https://cdn.bootcss.com/FileSaver.js/1.3.8/FileSaver.js"></script>
-	<script type="text/javascript" src="https://jackiechj.github.io/js/readjson.js"></script>
+
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
@@ -13,9 +14,58 @@
        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
        <script src="https://www.echartsjs.com/examples/vendors/jquery/jquery.js" ></script>
        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+	   <script type="text/javascript" src="https://jackiechj.github.io/js/usecharts.js"></script>
+	   	<script type="text/javascript" src="https://jackiechj.github.io/js/readjson.js"></script>
+	   <style> 
+.div-relative{position:relative; color:#000; border:1px solid #000; width:500px; height:400px} 
+.div-a{ position:absolute; right:15px; top:0px;  background-color:rgba(0,0,0,0); width:200px; height:100px} 
+.div-han{ position:absolute; left:420px; bottom:0%;  border:1px solid #000; background-color:rgba(0,0,0,0); width:300px; height:250px} 
+.div-china{ position:absolute; left:15px; top:40%; border:1px solid #000; background-color:rgba(0,0,0,0); width:400px; height:300px} 
+.title-box {
+    width: 100%;
+    height: 20%;
+    background: url(./images/box_title.png) top left no-repeat;
+    background-size: 100% 100%;
+    margin: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    position: relative;
+}
+.data-box {
+    width: 100%;
+    height: 80%;
+    background: url(./images/border_bg01.png) top left no-repeat;
+    background-size: 100% 100%;
+    margin-top :10.05%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    position: relative;
+	;background-color:#A2B5CD
+}
+.data-number{
+height:100%;
+width:100%;
+margin-top :45%;
+ color: 330066;
+    font-size: 3rem;
+    line-height: 2.3rem;
+    text-align: center;
+}
+</style> 
+
 </head>
 <body style="background-color:#C9CFCE">
 <div id="container" style="height: 100%"></div>
-
+<div id="world" class="div-a">
+		<div class="title-box" style="top: 0px; left: 0px; position: absolute; margin: 0px; "><p style="top: 0px; left:15px; position: absolute; margin: 0px; ">全球确诊人数</p>
+        </div>
+        <div class="data-box"><p class="data-number" id="worldsum"></p></div>
+</div>
+<!-- <p style="position:absolute; left:15px; top:35%;">中国</p>
+<div id="china" class="div-china"></div> -->
+<p style="position:absolute; left:420px; bottom:22%;width:50px"></p>
+<div id="hanguo" class="div-han" style="background-color:#C9CFCE"></div>
 </body>
 </html>
