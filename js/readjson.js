@@ -10,47 +10,7 @@
 			var worldsumdata=new Array();
 			var dataobject;
 			var citydata=new Array();
-	$(function(){
-
-			$.get("https://jackiechj.github.io/first/data/hg.json",function(msg){       //请求返回参数
-		handata=msg;
-			});
-			$.get("https://jackiechj.github.io/first/data/rb.json",function(msg){       //请求返回参数
-		rdata=msg;
-			});
-			$.get("https://jackiechj.github.io/first/data/jnd.json",function(msg){       //请求返回参数
-		jdata=msg;
-			});
-			$.get("https://jackiechj.github.io/first/data/yd.json",function(msg){       //请求返回参数
-		ydata=msg;
-			});
-			$.get("https://jackiechj.github.io/first/data/mg.json",function(msg){       //请求返回参数
-		mdata=msg;
-			});
-			$.get("https://jackiechj.github.io/first/data/eg.json",function(msg){       //请求返回参数
-		edata=msg;
-			});
-			$.get("https://jackiechj.github.io/first/data/idl.json",function(msg){       //请求返回参数
-		idata=msg;
-			});
-			$.get("https://jackiechj.github.io/first/data/bx.json",function(msg){       //请求返回参数
-		bdata=msg;
-			});
-			$.get("https://jackiechj.github.io/first/data/world.json",function(msg){       //请求返回参数
-		worlddata=msg;
-			});
-			$.get("https://jackiechj.github.io/first/data/worldsum.json",function(msg){       //请求返回参数
-		worldsumdata=msg;
-			});
-			$.get("https://jackiechj.github.io/first/data/data.json",function(msg){       //请求返回参数
-		dataobject=msg;
-			});
-			$.get("https://jackiechj.github.io/first/json/city1.json",function(msg){       //请求返回参数
-		citydata=msg;
-			});
-		
-		
-var dom = document.getElementById("container");
+			function chartsworld(dom){
 var myChart = echarts.init(dom);
 var app = {};
 option = null;
@@ -99,7 +59,7 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
         console.log(params);
         var showHtm="";
         
-        showHtm+="国家："+params.name+ "确诊人数："+ params.value[2]+" 人"+'<br>'
+        showHtm+="国家："+params.name+'<br>'+ "确诊人数："+ params.value[2]+" 人"
   
         return showHtm;
         }},
@@ -143,13 +103,21 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
             type: 'scatter',
             coordinateSystem: 'geo',
             data: val,
-            /* symbolSize: function (val) {
-                return val[2] / 1000;
-            }, */
+             symbolSize: function (val) {
+                if(val[2]>10000){
+				return 25;
+				}
+				else if(val[2]>9000)
+					return 15;
+				else if(val[2]>1000)
+					return 10
+				else
+					return 7;
+            }, 
             label: {
                 formatter: '{b}',
                 position: 'right',
-                show: true
+                show: false
             },
             itemStyle: {
                 color: 'red'
@@ -160,6 +128,18 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
                 }
             }
         }/* ,
+		 {
+                        zlevel: 1.5,
+                        type: 'bar',
+                        symbol: 'none',
+                        itemStyle: {
+                            normal: {
+                                color: blue
+                            }
+                        },
+                        data: worlddata
+                    } */
+		/* ,
             {
                 name: '香港18区人口密度',
                 type: 'map',
@@ -202,12 +182,60 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
         } */
         ]
     });
-});;
+});
 if (option && typeof option === "object") {
     myChart.setOption(option, true);
 }
-  });
+ 
+}
+	$(function(){
 
-  console.log(worlddata);
+			$.get("https://jackiechj.github.io/first/data/hg.json",function(msg){       //请求返回参数
+		handata=msg;
+			});
+			$.get("https://jackiechj.github.io/first/data/rb.json",function(msg){       //请求返回参数
+		rdata=msg;
+			});
+			$.get("https://jackiechj.github.io/first/data/jnd.json",function(msg){       //请求返回参数
+		jdata=msg;
+			});
+			$.get("https://jackiechj.github.io/first/data/yd.json",function(msg){       //请求返回参数
+		ydata=msg;
+			});
+			$.get("https://jackiechj.github.io/first/data/mg.json",function(msg){       //请求返回参数
+		mdata=msg;
+			});
+			$.get("https://jackiechj.github.io/first/data/eg.json",function(msg){       //请求返回参数
+		edata=msg;
+			});
+			$.get("https://jackiechj.github.io/first/data/idl.json",function(msg){       //请求返回参数
+		idata=msg;
+			});
+			$.get("https://jackiechj.github.io/first/data/bx.json",function(msg){       //请求返回参数
+		bdata=msg;
+			});
+			$.get("https://jackiechj.github.io/first/data/world.json",function(msg){       //请求返回参数
+		worlddata=msg;
+			});
+			$.get("https://jackiechj.github.io/first/data/worldsum.json",function(msg){       //请求返回参数
+		worldsumdata=msg;
+		document.getElementById('worldsum').innerHTML = worldsumdata[0].value;
+			});
+			$.get("https://jackiechj.github.io/first/data/data.json",function(msg){       //请求返回参数
+		dataobject=msg;
+			});
+			$.get("https://jackiechj.github.io/first/json/city1.json",function(msg){       //请求返回参数
+		citydata=msg;
+			});
+		
+	if(worldsumdata.length!=0){
+		
+	}	
+var dom = document.getElementById("container");
+chartsworld(dom);
+var domhan = document.getElementById("hanguo");
+chartshan(domhan);
+ });
+
   
 	
