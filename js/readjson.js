@@ -235,6 +235,10 @@ var dom = document.getElementById("container");
 chartsworld(dom);
 var domhan = document.getElementById("hanguo");
 chartshan(domhan);
+var domi = document.getElementById("italy");
+chartitaly(domi);
+var domi = document.getElementById("eurape");
+charteur(domi);
  });
 
   
