@@ -14,17 +14,18 @@
        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
        <script src="https://www.echartsjs.com/examples/vendors/jquery/jquery.js" ></script>
        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
-	   <script type="text/javascript" src="https://jackiechj.github.io/js/usecharts.js"></script>
-	   	<script type="text/javascript" src="https://jackiechj.github.io/js/readjson.js"></script>
+	   <script type="text/javascript" src="./js/usecharts.js"></script>
+	   	<script type="text/javascript" src="./js/readjson.js"></script>
 	   <style> 
 .div-relative{position:relative; color:#000; border:1px solid #000; width:500px; height:400px} 
 .div-a{ position:absolute; right:15px; top:0px;  background-color:rgba(0,0,0,0); width:200px; height:100px} 
 .div-han{ position:absolute; left:420px; bottom:0%;  border:1px solid #000; background-color:rgba(0,0,0,0); width:300px; height:250px} 
-.div-china{ position:absolute; left:15px; top:40%; border:1px solid #000; background-color:rgba(0,0,0,0); width:400px; height:300px} 
+.div-i{ position:absolute; left:750px; bottom:0%;  border:1px solid #000; background-color:rgba(0,0,0,0); width:300px; height:250px} 
+.div-eur{ position:absolute; left:15px; top:43%; border:1px solid #000; background-color:rgba(0,0,0,0); width:350px; height:300px} 
 .title-box {
     width: 100%;
     height: 20%;
-    background: url(./images/box_title.png) top left no-repeat;
+    background: url('https://jackiechj.github.io/images/box_title.png') top left no-repeat;
     background-size: 100% 100%;
     margin: auto;
     display: flex;
@@ -35,7 +36,7 @@
 .data-box {
     width: 100%;
     height: 80%;
-    background: url(./images/border_bg01.png) top left no-repeat;
+    background: url('https://jackiechj.github.io/images/border_bg01.png') top left no-repeat;
     background-size: 100% 100%;
     margin-top :10.05%;
     display: flex;
@@ -65,7 +66,9 @@ margin-top :45%;
 </div>
 <!-- <p style="position:absolute; left:15px; top:35%;">中国</p>
 <div id="china" class="div-china"></div> -->
+<div id="eurape" class="div-eur"></div>
 <p style="position:absolute; left:420px; bottom:22%;width:50px"></p>
 <div id="hanguo" class="div-han" style="background-color:#C9CFCE"></div>
+<div id="italy" class="div-i" style="background-color:#C9CFCE"></div>
 </body>
 </html>
