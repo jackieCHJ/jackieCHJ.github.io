@@ -107,7 +107,7 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
                 if(val[2]>10000){
 				return 25;
 				}
-				else if(val[2]>9000)
+				else if(val[2]>7000)
 					return 15;
 				else if(val[2]>1000)
 					return 10
