@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+	<title>JS读取和导出excel示例</title>
+	<meta name="description" content="使用sheetjs读取和导出excel示例">
+    <style type="text/css">
+	table {
+	    border-collapse: collapse;
+		height:300px;
+	}
+	th, td {
+	    border: solid 1px #6D6D6D;
+	    padding: 5px 10px;
+	}
+	.mt-sm {margin-top: 8px;}
+	body {
+		background: #f4f4f4;
+		padding: 0;
+		margin: 0;
+	}
+	.container {
+		width: 1024px;
+		margin: 0 auto;
+		background: #fff;
+		padding: 20px;
+		min-height: 100vh;
+	}
+    </style>
+	<script type="text/javascript" src="./js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.bootcss.com/FileSaver.js/1.3.8/FileSaver.js"></script>
+	<script type="text/javascript" src="./js/xlsx.core.min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0AYiqgn4lYgbMdnAenmzY1B0ZUnvr53w"></script>
+</head>
+<body>
+	<div class="container">
+		
+		<h2>读取excel</h2>
+		<div class="mt-sm">
+			<input type="file" id="file" style="display:none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+			<a href="javascript:selectFile()">加载本地excel文件直接导出保存</a>
+			
+		</div>
+	
+	
+		
+	</div>
+	
+	<script type="text/javascript" src="./js/excel.js">
+
+	
+	</script>
+</body>
+</html>
