@@ -41,6 +41,8 @@ console.log(handata);
     myChart.setOption(option = {
         title: {
             text: '韩国疫情分布',
+			textStyle: {
+            color: '#D3D0C5'}
             //subtext: '人口密度数据来自Wikipedia',
             //sublink: 'http://zh.wikipedia.org/wiki/%E9%A6%99%E6%B8%AF%E8%A1%8C%E6%94%BF%E5%8D%80%E5%8A%83#cite_note-12'
         },
@@ -60,7 +62,7 @@ console.log(handata);
             left: 'right',
             top: 'center',
             feature: {
-                dataView: {readOnly: false},
+                //dataView: {readOnly: false},
                 restore: {},
                 saveAsImage: {}
             }
@@ -94,11 +96,39 @@ console.log(handata);
 				zoom: 1.3,
 				aspectScale:1,
                 mapType: 'han', // 自定义扩展图表类型
+				
                 label: {
                     show: false
                 },
-                data: handata}
-		
+                data: handata,
+		itemStyle: { // 地图区域的多边形 图形样式。
+                normal: {
+                    borderColor: 'rgba(147, 235, 248, 1)', // 图形的描边颜色
+                    borderWidth: 1, // 描边宽度 0表示无描边
+                    areaColor: { // 地图区域的颜色
+                        type: 'radial', // 径向渐变
+                        x: 0.5, // 圆心 x,y
+                        y: 0.5,
+                        r: 0.8, // 半径
+                        colorStops: [{
+                            offset: 0,
+                            color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                        }, {
+                            offset: 1,
+                            color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                        }],
+                        globalCoord: false // 缺省为 false
+                    },
+                    shadowColor: 'rgba(128, 217, 248, 1)', // 阴影颜色
+                    shadowOffsetX: -2, //阴影水平方向上的偏移距离。
+                    shadowOffsetY: 2, //阴影垂直方向上的偏移距离。
+                    shadowBlur: 10 // 图形阴影的模糊大小
+                },
+				 emphasis: { // 鼠标移动到时
+                    areaColor: 'rgb(255,182,193,0.7)',
+                    borderWidth: 0
+                }
+		}}
         ]
     });
 });
@@ -155,8 +185,10 @@ console.log(handata);
         title: {
             text: '意大利疫情分布',
 			 textStyle:{
-                    align:'right'   //水平对齐
-                },
+                    align:'right',
+					color: '#D3D0C5'	
+			 }	,	//水平对齐
+
 			  right:'0'
 			//title. textAlign : 'right'
             //subtext: '人口密度数据来自Wikipedia',
@@ -178,7 +210,7 @@ console.log(handata);
             left: 'right',
             top: 'center',
             feature: {
-                dataView: {readOnly: false},
+                //dataView: {readOnly: false},
                 restore: {},
                 saveAsImage: {}
             }
@@ -207,7 +239,7 @@ console.log(handata);
             }
         },
         series: [
-		{name: '韩国疫情分布',
+		{name: 'i国疫情分布',
                 type: 'map',
 				zoom: 1.3,
 				aspectScale:1,
@@ -215,6 +247,34 @@ console.log(handata);
                 label: {
                     show: false
                 },
+				itemStyle: { // 地图区域的多边形 图形样式。
+                normal: {
+                    borderColor: 'rgba(147, 235, 248, 1)', // 图形的描边颜色
+                    borderWidth: 1, // 描边宽度 0表示无描边
+                    areaColor: { // 地图区域的颜色
+                        type: 'radial', // 径向渐变
+                        x: 0.5, // 圆心 x,y
+                        y: 0.5,
+                        r: 0.8, // 半径
+                        colorStops: [{
+                            offset: 0,
+                            color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                        }, {
+                            offset: 1,
+                            color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                        }],
+                        globalCoord: false // 缺省为 false
+                    },
+                    shadowColor: 'rgba(128, 217, 248, 1)', // 阴影颜色
+                    shadowOffsetX: -2, //阴影水平方向上的偏移距离。
+                    shadowOffsetY: 2, //阴影垂直方向上的偏移距离。
+                    shadowBlur: 10 // 图形阴影的模糊大小
+                },
+				 emphasis: { // 鼠标移动到时
+                    areaColor: 'rgb(255,182,193,0.7)',
+                    borderWidth: 0
+                }
+            },
                 data: idata}
 		
         ]
@@ -267,6 +327,9 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
     myChart.setOption(option = {
         title: {
             text: '欧洲疫情分布',
+			textStyle: {
+            color: '#D3D0C5'
+        }
             //subtext: '人口密度数据来自Wikipedia',
             //sublink: 'http://zh.wikipedia.org/wiki/%E9%A6%99%E6%B8%AF%E8%A1%8C%E6%94%BF%E5%8D%80%E5%8A%83#cite_note-12'
         },
@@ -286,7 +349,7 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
             left: 'right',
             top: 'center',
             feature: {
-                dataView: {readOnly: false},
+                //dataView: {readOnly: false},
                 restore: {},
                 saveAsImage: {}
             }
@@ -302,15 +365,34 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
     // 定位右下角经纬度
     [40.563712,32.727186]
 ],
-        itemStyle: {					// 定义样式
-            normal: {					// 普通状态下的样式
-                areaColor: '#323c48',
-                borderColor: '#111'
-            },
-            emphasis: {					// 高亮状态下的样式
-                areaColor: '#2a333d'
+       itemStyle: { // 地图区域的多边形 图形样式。
+                normal: {
+                    borderColor: 'rgba(147, 235, 248, 1)', // 图形的描边颜色
+                    borderWidth: 1, // 描边宽度 0表示无描边
+                    areaColor: { // 地图区域的颜色
+                        type: 'radial', // 径向渐变
+                        x: 0.5, // 圆心 x,y
+                        y: 0.5,
+                        r: 0.8, // 半径
+                        colorStops: [{
+                            offset: 0,
+                            color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                        }, {
+                            offset: 1,
+                            color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                        }],
+                        globalCoord: false // 缺省为 false
+                    },
+                    shadowColor: 'rgba(128, 217, 248, 1)', // 阴影颜色
+                    shadowOffsetX: -2, //阴影水平方向上的偏移距离。
+                    shadowOffsetY: 2, //阴影垂直方向上的偏移距离。
+                    shadowBlur: 10 // 图形阴影的模糊大小
+                },
+				 emphasis: { // 鼠标移动到时
+                    areaColor: 'rgb(255,182,193,0.7)',
+                    borderWidth: 0
+                }
             }
-        }
     },
         /* visualMap: {
             min: 0,
@@ -404,6 +486,125 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
                 }
             }
         } */
+        ]
+    });
+});
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+ 
+}
+
+
+function chartschina(dom){
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+myChart.showLoading();
+//获取最大值
+
+$.get('https://cdn.jsdelivr.net/npm/echarts@4.6.0/map/json/china.json', function (geoJson) {
+
+    myChart.hideLoading();
+//console.log(handata);
+    echarts.registerMap('zg', geoJson);
+	//var val=convertData(worlddata,citydata.features);
+
+    myChart.setOption(
+	option = {
+        title: {
+            text: '中国疫情分布',
+			textStyle: {
+				align:'right',
+				color: '#D3D0C5'
+				},
+				right:'0'
+            //subtext: '人口密度数据来自Wikipedia',
+            //sublink: 'http://zh.wikipedia.org/wiki/%E9%A6%99%E6%B8%AF%E8%A1%8C%E6%94%BF%E5%8D%80%E5%8A%83#cite_note-12'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: function (params, ticket, callback) {
+        console.log(params);
+        var showHtm="";
+        
+        showHtm+="省份："+params.name+'<br>'+ " 确诊人数："+ params.value+" 人"
+  
+        return showHtm;
+        }},
+        toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                //dataView: {readOnly: false},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+		/* geo: {
+        map: 'han',
+		
+        itemStyle: {					// 定义样式
+            normal: {					// 普通状态下的样式
+                areaColor: '#323c48',
+                borderColor: '#111'
+            },
+            emphasis: {					// 高亮状态下的样式
+                areaColor: '#2a333d'
+            }
+        }
+    }, */
+        visualMap: {
+            min: 0,
+            max: 1400,
+            text: ['High', 'Low'],
+            realtime: false,
+            calculable: true,
+            inRange: {
+                color: ['#323c48','yellow', '#DD9222','#CC3333','orangered','red'],
+            }
+        },
+        series: [
+		{name: '中国疫情分布',
+                type: 'map',
+				zoom: 1,
+				aspectScale:1,
+                mapType: 'zg', // 自定义扩展图表类型
+				
+                label: {
+                    show: false
+                },
+                data: zdata,
+		itemStyle: { // 地图区域的多边形 图形样式。
+                normal: {
+                    borderColor: 'rgba(147, 235, 248, 1)', // 图形的描边颜色
+                    borderWidth: 1, // 描边宽度 0表示无描边
+                    areaColor: { // 地图区域的颜色
+                        type: 'radial', // 径向渐变
+                        x: 0.5, // 圆心 x,y
+                        y: 0.5,
+                        r: 0.8, // 半径
+                        colorStops: [{
+                            offset: 0,
+                            color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                        }, {
+                            offset: 1,
+                            color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                        }],
+                        globalCoord: false // 缺省为 false
+                    },
+                    shadowColor: 'rgba(128, 217, 248, 1)', // 阴影颜色
+                    shadowOffsetX: -2, //阴影水平方向上的偏移距离。
+                    shadowOffsetY: 2, //阴影垂直方向上的偏移距离。
+                    shadowBlur: 10 // 图形阴影的模糊大小
+                },
+				 emphasis: { // 鼠标移动到时
+                    areaColor: 'rgb(255,182,193,0.7)',
+                    borderWidth: 0
+                }
+		}}
         ]
     });
 });

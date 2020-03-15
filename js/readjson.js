@@ -10,7 +10,8 @@
 			var worldsumdata=new Array();
 			var dataobject;
 			var citydata=new Array();
-			function chartsworld(dom){
+			var zdata=new Array();
+function chartsworld(dom){
 var myChart = echarts.init(dom);
 var app = {};
 option = null;
@@ -50,6 +51,11 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
     myChart.setOption(option = {
         title: {
             text: '世界疫情分布',
+			
+			textStyle: {
+            color: '#D3D0C5'
+        }
+			
             //subtext: '人口密度数据来自Wikipedia',
             //sublink: 'http://zh.wikipedia.org/wiki/%E9%A6%99%E6%B8%AF%E8%A1%8C%E6%94%BF%E5%8D%80%E5%8A%83#cite_note-12'
         },
@@ -69,7 +75,7 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
             left: 'right',
             top: 'center',
             feature: {
-                dataView: {readOnly: false},
+                //dataView: {readOnly: false},
                 restore: {},
                 saveAsImage: {}
             }
@@ -78,15 +84,34 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
         map: 'world',
 		zoom: 1.2,
 		aspectScale:1.2,
-        itemStyle: {					// 定义样式
-            normal: {					// 普通状态下的样式
-                areaColor: '#323c48',
-                borderColor: '#111'
-            },
-            emphasis: {					// 高亮状态下的样式
-                areaColor: '#2a333d'
+         itemStyle: { // 地图区域的多边形 图形样式。
+                normal: {
+                    borderColor: 'rgba(147, 235, 248, 1)', // 图形的描边颜色
+                    borderWidth: 1, // 描边宽度 0表示无描边
+                    areaColor: { // 地图区域的颜色
+                        type: 'radial', // 径向渐变
+                        x: 0.5, // 圆心 x,y
+                        y: 0.5,
+                        r: 0.8, // 半径
+                        colorStops: [{
+                            offset: 0,
+                            color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                        }, {
+                            offset: 1,
+                            color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                        }],
+                        globalCoord: false // 缺省为 false
+                    },
+                    shadowColor: 'rgba(128, 217, 248, 1)', // 阴影颜色
+                    shadowOffsetX: -2, //阴影水平方向上的偏移距离。
+                    shadowOffsetY: 2, //阴影垂直方向上的偏移距离。
+                    shadowBlur: 10 // 图形阴影的模糊大小
+                },
+				 emphasis: { // 鼠标移动到时
+                    areaColor: 'rgb(255,182,193,0.7)',
+                    borderWidth: 0
+                }
             }
-        }
     },
         /* visualMap: {
             min: 0,
@@ -98,7 +123,8 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
                 color: ['lightskyblue', 'yellow', 'orangered']
             }
         }, */
-        series: [{
+        series: [
+		{
             name: 'pm2.5',
             type: 'scatter',
             coordinateSystem: 'geo',
@@ -110,7 +136,7 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
 				else if(val[2]>7000)
 					return 15;
 				else if(val[2]>1000)
-					return 10
+					return 10;
 				else
 					return 7;
             }, 
@@ -127,7 +153,38 @@ $.get('https://jackiechj.github.io/first/json/world1.json', function (geoJson) {
                     show: false
                 }
             }
-        }/* ,
+        },
+		/* {
+            name: 'pm2.51',
+            type: 'effectScatter',
+            coordinateSystem: 'geo',
+            data: val,
+             symbolSize: function (val) {
+                if(val[2]>10000){
+				return 25;
+				}
+				else if(val[2]>7000)
+					return 15;
+				else if(val[2]>1000)
+					return 0
+				else
+					return 0;
+            }, 
+            label: {
+                formatter: '{b}',
+                position: 'right',
+                show: false
+            },
+            itemStyle: {
+                color: 'red'
+            },
+            emphasis: {
+                label: {
+                    show: false
+                }
+            }
+        } */
+		/* ,
 		 {
                         zlevel: 1.5,
                         type: 'bar',
@@ -188,7 +245,7 @@ if (option && typeof option === "object") {
 }
  
 }
-	$(function(){
+$(function(){
 
 			$.get("https://jackiechj.github.io/first/data/hg.json",function(msg){       //请求返回参数
 		handata=msg;
@@ -225,21 +282,19 @@ if (option && typeof option === "object") {
 		dataobject=msg;
 			});
 			$.get("https://jackiechj.github.io/first/json/city1.json",function(msg){       //请求返回参数
-		citydata=msg;
+		citydata=msg;});
+		$.get("https://jackiechj.github.io/first/data/zg.json",function(msg){       //请求返回参数
+		zdata=msg;
 			});
-		
-	if(worldsumdata.length!=0){
-		
-	}	
+	
 var dom = document.getElementById("container");
 chartsworld(dom);
 var domhan = document.getElementById("hanguo");
 chartshan(domhan);
 var domi = document.getElementById("italy");
 chartitaly(domi);
-var domi = document.getElementById("eurape");
-charteur(domi);
+var dome = document.getElementById("eurape");
+charteur(dome);
+var domc = document.getElementById("china");
+chartschina(domc);
  });
-
-  
-	
