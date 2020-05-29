@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>四川省旅游产业可视化</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./fonts/icomoon.css">
+	<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+</head>
+
+<body>
+    <div class="viewport">
+        <div class="column">
+            <!--概览-->
+            <div class="overview panel">
+                <div class="inner">
+                    <div class="item">
+                        <h4>36980</h4>
+                        <span>
+                            <i class="icon-dot" style="color: #006cff"></i>
+                            GDP（亿美元）
+                        </span>
+                    </div>
+                    <div class="item">
+                        <h4>8302</h4>
+                        <span>
+                            <i class="icon-dot" style="color: #6acca3"></i>
+                            人口（万人）
+                        </span>
+                    </div>
+                    <div class="item">
+                        <h4>144605</h4>
+                        <span>
+                            <i class="icon-dot" style="color: #6acca3"></i>
+                            旅游外汇收入（万美元）
+                        </span>
+                    </div>
+                    <div class="item">
+                        <h4>147.323</h4>
+                        <span>
+                            <i class="icon-dot" style="color: #ed3f35"></i>
+                            入境游客总人数（万人）
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!--监控-->
+            <div class="monitor panel">
+                <div class="inner">
+                    <div class="tabs">
+                        <a href="javascript:;" data-index="0" class="active">四川省景区分布</a>
+                    </div>
+                    
+					     <div id="jingqu"style="height: 100%"></div>
+					
+                   
+                </div>
+            </div>
+            <!--点位-->
+            <div class="point panel">
+                <div class="inner">
+                    <h3>近十年入境消费结构比例统计</h3>
+                    <div class="chart">
+                        <div class="pie"></div>
+                        <div class="data">
+                            <div class="item">
+                                <h4>6.3%</h4>
+                                <span>
+                                    <i class="icon-dot" style="color: #ed3f35"></i>
+                                    消费结构指数
+                                </span>
+                            </div>
+                            <div class="item">
+                                <h4>5.1%</h4>
+                                <span>
+                                    <i class="icon-dot" style="color: #eacf19"></i>
+                                    上一年消费结构指数
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <!-- 地图 -->
+            <div class="map">
+                <h3>
+                    <span class="icon-cube"></span>
+                    一带一路国家分布及入境人数变化
+                </h3>
+                <div class="chart">
+                    <div class="geo" id='datu'></div>
+                </div>
+            </div>
+            <!-- 用户 -->
+            <div class="users panel">
+                <div class="inner">
+                    <h3>一带一路国家客源国人数变化</h3>
+                    <div class="chart">
+                        <div class="bar"></div>
+                        <div class="data">
+                            <div class="item">
+                                <h4>241.2495</h4>
+                                <span>
+                                    <i class="icon-dot" style="color: #ed3f35"></i>
+                                    入境人数总数
+                                </span>
+                            </div>
+                            <div class="item">
+                                <h4>37.9749</h4>
+                                <span>
+                                    <i class="icon-dot" style="color: #eacf19"></i>
+                                    入境人数最多国家
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <!-- 订单 -->
+            <div class="order panel">
+                <div class="inner">
+                    <!-- 数据 -->
+                    <div class="data">
+                        <div class="item">
+                            <h4>323</h4>
+                            <span>
+                                <i class="icon-dot" style="color: #ed3f35;"></i>
+                                星级饭店总数
+                            </span>
+                        </div>
+                        <div class="item">
+                            <h4>773</h4>
+                            <span>
+                                <i class="icon-dot" style="color: #eacf19;"></i>
+                                旅行社总数
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 销售额 -->
+            <div class="sales panel">
+                <div class="inner">
+                    <div class="caption">
+                        <h3>四川省外汇收入统计</h3>
+                    </div>
+                    <div class="chart">
+                        <div class="label">单位:万美元</div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 渠道 季度 -->
+            <div class="wrap">
+                <div class="channel panel">
+                    <div class="inner">
+                        <h3>景区集中度分布</h3>
+                        <div class="data">
+                            <div class="item">
+                                <h4>25.1 <small></small></h4>
+                                <span>
+                                    <i class="icon-plane"></i>
+                                    地理集中度
+                                </span>
+                            </div>
+                            <div class="item">
+                                <h4>0.114 <small></small></h4>
+                                <span>
+                                    <i class="icon-bag"></i>
+                                    全局莫兰
+                                </span>
+                            </div>
+                        </div>
+                        <div class="data">
+                            <div class="item">
+                                <h4>1.9052 <small></small></h4>
+                                <span>
+                                    <i class="icon-train"></i>
+                                    Z-score
+                                </span>
+                            </div>
+                            <div class="item">
+                                <h4>0.51 <small></small></h4>
+                                <span>
+                                    <i class="icon-bus"></i>
+                                    最邻近R
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="quarter panel">
+                    <div class="inner">
+                        <h3>高级景区</h3>
+                        <div class="chart">
+                            <div class="box">
+                                <div class="gauge"></div>
+                                <div class="label">44.2<small> %</small></div>
+                            </div>
+                            <div class="data">
+                                <div class="item">
+                                    <h4>1.126</h4>
+                                    <span>
+                                        <i class="icon-dot" style="color: #6acca3"></i>
+                                        5A级景区最邻近指数R
+                                    </span>
+                                </div>
+                                <div class="item">
+                                    <h4>613</h4>
+                                    <span>
+                                        <i class="icon-dot" style="color: #ed3f35"></i>
+                                        景区总数
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 锡尔指数情况 -->
+            <div class="sales panel" style='height: 11.8rem;'>
+                <div class="inner" style='height: 100%;width:300px'>
+                    
+                        <h3>锡尔指数情况</h3>
+						<div class="chart">
+                        <div id="xier"style="height: 100%;width:100%"></div>
+						
+						</div>
+						
+                   
+                    
+                </div>
+				
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="./js/index.js"></script>
+
+<script src="./js/china.js"></script>
+<!-- <script src="./js/mymap.js"></script> -->
+<script src="./js/charts.js"></script>
+<script src="./js/zhongjian.js"></script>
+</html>
