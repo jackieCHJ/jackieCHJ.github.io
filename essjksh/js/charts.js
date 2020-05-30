@@ -109,9 +109,9 @@ if (option && typeof option === "object") {
 		}
 $(function(){
 
-	$.get('http://jackieCHJ.github.io/json/sichuan.json', function (ggeoJson) {
+	$.get('https://jackieCHJ.github.io/json/sichuan.json', function (ggeoJson) {
 		geojson=ggeoJson;
-		$.get('http://jackieCHJ.github.io/json/jingqu.json', function (ggeoJson1) {
+		$.get('https://jackieCHJ.github.io/json/jingqu.json', function (ggeoJson1) {
 				geojson1=ggeoJson1;	
 				var dom = document.getElementById("jingqu");
 				chartjingdian(dom);
