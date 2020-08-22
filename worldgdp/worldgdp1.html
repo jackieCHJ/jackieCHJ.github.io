@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+	   <title>世界GDP</title>
+	   <style>
+		   .xuanfu{
+		       position: absolute;
+		       text-align: center;
+		       top: 10px;
+			   right: 10px;
+		       width: 500px;
+		       height: 300px;
+			   
+			   z-index:9999;
+
+		   }
+	   </style>
+	   	   <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet" />
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%;z-index: 1;"></div>
+	   <!--<div id="containerbar" class="xuanfu"></div>-->
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+	   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.js.map"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.8&key=2ea0329b53b3d8679f1d37af2a40c97f"></script>
+       <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>-->
+	   <script src="https://jackieCHJ.github.io/worldgdp/jquery.js"></script>
+	   <script src="https://jackieCHJ.github.io/worldgdp/amap.js"></script>
+	   <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.0/mapbox-gl-language.js'></script>
+	       <script type="text/javascript" src="./EchartsLayer.js"></script>
+	   <!--<script src="loadcharts.js"></script>-->
+       <script type="text/javascript">
+		   mapboxgl.accessToken = 'pk.eyJ1IjoiamFja2llODQ5NDk1MzI3IiwiYSI6ImNrZTN5ZjB4ZDBhMDEycW82MWNzNHR2YjYifQ.vCTN88UhnB_14BP33C4wiw';
+		   mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.1.0/mapbox-gl-rtl-text.js');                    
+		   var map = new mapboxgl.Map({
+		       container: 'container',
+		       zoom: 2,
+		   	
+		       center: [0, 20],
+		     style: 'mapbox://styles/mapbox/streets-v11'
+		   	//style: 'mapbox://styles/jackie849495327/cke415p8c0qjd19nynb6v33pi'
+		   	
+		   	//mapbox://styles/sunhhh/ckdb78mif1wk41io6w0zqsuvw
+		   	
+		   	
+		   });
+		   map.addControl(new MapboxLanguage({
+		                   defaultLanguage: 'zh'
+		               }));
+		   map.addControl(new mapboxgl.NavigationControl());
+ map.on('load', function () {
+	
+	var app = {};
+	option = null;
+	var data = [
+	];
+	var geoCoordMap = {
+	};
+	function jsonmax(data){
+		a0=parseFloat(data[0]["value"]) ;
+		for (var i=0;i<data.length;i++){
+			a=parseFloat(data[i]["value"]);
+			if(a>a0)
+			{
+				a0=a;
+			}
+		}
+		return(a0)
+	}
+	function jsonmin(data){
+		a0=parseFloat(data[0]["value"]) ;
+		for (var i=0;i<data.length;i++){
+			a=parseFloat(data[i]["value"]);
+			if(a<a0)
+			{
+				a0=a;
+			}
+		}
+		return(a0)
+	}
+	function sleep(delay) {
+		var start = (new Date()).getTime();
+		while((new Date()).getTime() - start < delay) {
+			continue;
+		}
+	}
+	function jsonmean(data){
+		min=jsonmin(data) ;
+		max=jsonmax(data) ;
+		for (var i=0;i<data.length;i++){
+			data[i]["value"]=String((data[i]["value"]-min)/(max-min))
+		}
+		return(data)
+	}
+	function json1(data){
+	a1=[];
+	a2=[];
+	for (var i=0;i<data.length;i++){
+		a=parseFloat(data[i]["value"]);
+		a1.push(a);
+		a=(data[i]["name"]);
+		a2.push(a);
+		}
+	result=[];
+	a1=a1.sort(function(a,b){
+				return a - b;
+			})
+	result[0]=a1;
+	result[1]=a2;
+	return result;
+	}
+	function xx(data){
+		a1=[];
+		a2=[];
+		for (var i=0;i<data.length;i++){
+			a=parseFloat(data[i]["value"]);
+			a1.push(a);
+			}
+		result=[];
+		a1=a1.sort(function(a,b){
+					return a - b;
+				})
+		m1=jsonmin(data);
+		m2=jsonmax(data);
+		sum=0;
+		for (var i=0;i<a1.length;i++){
+			sum+=a1[i];
+		}
+		mean=sum/a1.length;
+		l1=999;l2=999;
+		result=[mean];
+		while (l1>0 &&l2>0)
+		{
+			r=xunhuan(a1,m1,mean,m2,l1,l2);
+			t1=m1;t2=mean;t3=m2;
+			l1=r[2];
+			l2=r[3];
+			if(l1>0&&r[0]>0)
+			{
+				m1=t1;mean=r[0];m2=t2;
+				result.push(r[0]);
+			}
+			if(l2>0&&r[1]>0){
+				m1=t2;mean=r[1];m2=t3;
+				result.push(r[1]);
+			}
+		}
+		result=result.sort(function(a,b){
+					return a - b;
+				})
+		k=45/result.length;
+		rr={};
+		for (var i=0;i<result.length;i++){
+			a=result[i];
+			aa=k*i+5;
+			rr[a]=aa;
+			}
+		return rr
+		
+	}
+	function xunhuan(d,m1,m2,m3,l1,l2){
+		a1=[];
+		a2=[];newm1=-1;newm2=-1;
+		if(l1>0){
+			sum=0;
+			for (var i=0;i<d.length;i++)
+			{
+				
+				if(m1<d[i]&&d[i]<m2)
+				{
+						a1.push(d[i]);
+						sum+=d[i];
+				}
+				
+			}
+		if(a1.length>0){
+		newm1=sum/a1.length;
+		l1=a1.length;
+		}else{l1=-1}
+		}
+		if(l2>0){
+			sum=0;
+		for (var i=0;i<d.length;i++)
+		{
+			
+			if(m2<d[i]&&d[i]<m3)
+			{
+					a2.push(d[i]);
+					sum+=d[i];
+			}
+			
+		}
+		if(a2.length>0)
+		{
+		newm2=sum/a2.length;
+		l2=a2.length;}
+		}
+		else{l2=-1}
+		return [newm1,newm2,l1,l2];
+	}
+	function json2(data){
+	a1={};
+	a2=[];
+	sum=0;
+	k=45/data.length;
+	for (var i=0;i<data.length;i++){
+		a=parseFloat((data[i]["value"]));
+		
+		a2.push(a);
+		}
+	a2=a2.sort(function(a,b){
+				return a - b;
+			})
+	for (var i=0;i<data.length;i++){
+		a=a2[i];
+		aa=k*i+5;
+		rr={};
+		a1[a]=aa;
+		}
+
+	return a1;
+	}
+
+	$.get("https://jackieCHJ.github.io/worldgdp/gdpusedata.json",function(data){
+		
+		//json1(data);
+		$.get("https://jackieCHJ.github.io/worldgdp/country.json",function(geoCoordMap){
+			//jie=json2(data);
+			$.get("https://jackieCHJ.github.io/worldgdp/timejson.json",function(time){
+				
+			var convertData = function (data) {
+				var res = [];
+				for (var i = 0; i < data.length; i++) {
+					var geoCoord = geoCoordMap[data[i].name];
+					if (geoCoord) {
+						res.push({
+							name: data[i].name,
+							value: geoCoord.concat(data[i].value)
+						});
+					}
+				}
+				return res;
+			};
+			function d2d(data){
+				op=[];
+				for (var i=0;i<data.length;i++){
+					ss={};
+					jie=xx(data[i]);
+					
+					jie1=Object.keys(jie);
+					s={
+								name: 'Gross Domestic Product (GDP)',
+								type: 'effectScatter',
+								coordinateSystem: 'GLMap',
+								data: convertData(data[i]),
+								tooltip : {
+									trigger: 'item',
+									transitionDuration:0
+									
+								},
+								symbolSize: function (val) {
+									
+									if (parseFloat([val[2]])<jie1[0])
+									{
+										return jie[jie1[0]]
+									}
+									if (parseFloat([val[2]])>jie1[jie1.length])
+									{
+										return jie[jie1[jie1.length]]
+									}
+									for (var i=0;i<jie1.length-1;i++){
+										if(jie1[i]<parseFloat([val[2]])<jie1[i+1]){
+												return jie[jie1[i+1]]
+										}
+										
+									}
+								},
+								encode: {
+									value: 2
+								},
+								label: {
+									formatter: '{b}',
+									position: 'right',
+									show: false
+								},
+								itemStyle: {
+									color: '#e67300'
+								}
+								
+							}
+					ss["series"]=s;
+					op.push(ss);
+						}
+				return op;
+				sleep(1);
+			}
+			dd=d2d(data);
+			option = {
+				baseOption:{
+				title: {
+					text: '全球GDP指标分布',
+					left: 'center'
+				},
+				
+				tooltip : {
+					trigger: 'item',
+					transitionDuration:0
+					
+				},
+				 GLMap: {
+				
+				                },
+				  timeline: {
+						  axisType: 'category',
+						  data: time,  	
+						  playInterval: 0.1,
+						  loop: false,
+						  bottom: "2.5%",
+						  symbolSize: 10,
+						  autoPlay: false,
+						  
+				  
+					  },
+					  series:[]
+				},
+				
+				options:dd
+			};;
+			if (option && typeof option === "object") {
+				for (var i=0;i<data.length;i++){
+					dd=json1(data[i]);
+					dataAxis=dd[1];
+					dataa=dd[0];
+					yMax=jsonmax(data[i]);
+					
+					var dataShadow = [];
+					
+					for (var j = 0; j < dataa.length; j++) {
+						dataShadow.push(yMax);
+					}
+					option1 = {
+						title: {
+							text: '全球GDP排名',
+							subtext: '滚轮放大或点击查看详细信息'
+						},
+						grid: {
+											right: '3%',
+											top: '3%',
+											bottom: '70%',
+											width: '30%'
+										},
+						xAxis: {
+							
+							data: dataAxis,
+							axisLabel: {
+								inside: true,
+								textStyle: {
+									color: '#fff'
+								}
+							},
+							axisTick: {
+								show: false
+							},
+							axisLine: {
+								show: false
+							},
+							z: 10
+						},
+						yAxis: {
+							axisLine: {
+								show: false
+							},
+							axisTick: {
+								show: false
+							},
+							axisLabel: {
+								textStyle: {
+									color: '#999'
+								}
+							}
+						},
+						dataZoom: [
+							{
+								type: 'inside'
+							}
+						],
+						series: [
+							{ // For shadow
+								type: 'bar',
+								itemStyle: {
+									color: 'rgba(0,0,0,0.05)'
+								},
+								barGap: '-100%',
+								barCategoryGap: '40%',
+								data: dataShadow,
+								animation: false
+							},
+							{
+								type: 'bar',
+								itemStyle: {
+									color: new echarts.graphic.LinearGradient(
+										0, 0, 0, 1,
+										[
+											{offset: 0, color: '#83bff6'},
+											{offset: 0.5, color: '#188df0'},
+											{offset: 1, color: '#188df0'}
+										]
+									)
+								},
+								emphasis: {
+									itemStyle: {
+										color: new echarts.graphic.LinearGradient(
+											0, 0, 0, 1,
+											[
+												{offset: 0, color: '#2378f7'},
+												{offset: 0.7, color: '#2378f7'},
+												{offset: 1, color: '#83bff6'}
+											]
+										)
+									}
+								},
+								data: dataa
+							}
+						]
+					};
+					x=option.options;
+					arr=option1.series.push(x[i].series);
+					arr=option1.series;
+					x[i]=Object.assign(option1,option.options[i]);
+					
+					x[i].series=arr;
+					option.options=x;
+				}
+				
+				
+				/*  */
+				var echartslayer = new EchartsLayer(map);
+				echartslayer.chart.setOption(option);
+					
+			}
+
+	})
+		})
+	})
+  })
+       </script>
+   </body>
+</html>
